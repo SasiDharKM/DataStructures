@@ -1,6 +1,4 @@
 #include<iostream>
-#include<cstdio>
-#include<sstream>
 #include<algorithm>
 #define pow2(n) (1 << (n))
 using namespace std;
@@ -82,8 +80,61 @@ public:
         return temp;
     }
 
-    avl_node* insert(avl_node *, int ){
+    avl_node* minVal(avl_node *temp){
+        while(temp->left != NULL){
+            temp=temp->left;
+        }
+        return temp;
+    }
 
+    avl_node* insert(avl_node * root, int value){
+        if ( root == NULL){
+            root = new avl_node;
+            root->data = value;
+            root->left=NULL;
+            root->right= NULL;
+            return root;
+        }
+        else if (value < root->data){
+            root->left = insert(root->left,value);
+            root = balance(root);
+        }
+        else if (value >= root->data){
+            root->right = insert(root->right,value);
+            root = balance(root);
+        }
+        return root;
+    }
+
+    avl_node* del(avl_node *root,int value){
+        if (root ==NULL)
+            return root;
+        if(value < root->data){
+            root->left = del(root->left,value);
+        }
+        else if (value > root->data){
+            root->right = del(root->right,value);
+        }
+        else{
+            if((root->left==NULL) ||(root->right==NULL)){
+                avl_node *temp = root->left?root->left:root->right;
+                if (temp== NULL){
+                    temp = root;
+                    root == NULL;
+                }
+                else {
+                    *root = *temp;
+                    free(temp);
+                }
+            }
+            else{
+                avl_node *temp = minVal(root->right);
+                root->data = temp->data;
+                root->right = del(root->right, temp->data);
+            }
+        }
+        root = balance(root);
+        return root;
     }
 
     void display(avl_node *ptr, int level){
@@ -112,12 +163,13 @@ int main()
     avlTree avl;
     while (1)
     {
-        cout<<"\n---------------------"<<endl;
+        cout<<"\n***********************"<<endl;
         cout<<"AVL Tree Implementation"<<endl;
-        cout<<"\n---------------------"<<endl;
+        cout<<"\n***********************"<<endl;
         cout<<"1.Insert Element into the tree"<<endl;
         cout<<"2.Display Balanced AVL Tree"<<endl;
-        cout<<"3.Exit"<<endl;
+        cout<<"3.Delete element from the tree"<<endl;
+        cout<<"4.Exit"<<endl;
         cout<<"Enter your Choice: ";
         cin>>choice;
         switch(choice)
@@ -137,8 +189,12 @@ int main()
                 avl.display(root, 1);
                 break;
             case 3:
-                exit(1);
+                cout<<"Enter value to be deleted: ";
+                cin>>item;
+                root = avl.del(root,item);
                 break;
+            case 4:
+                exit(1);
             default:
                 cout<<"Wrong Choice"<<endl;
         }
