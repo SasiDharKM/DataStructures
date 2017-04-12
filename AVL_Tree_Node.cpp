@@ -19,7 +19,7 @@ public:
             int l_h = height(temp->left);
             int r_h = height(temp->right);
             int max_h = max(l_h,r_h);
-             h =max_h +1;
+            h =max_h +1;
         }
         return h;
 
@@ -120,11 +120,12 @@ public:
                 avl_node *temp = root->left?root->left:root->right;
                 if (temp== NULL){
                     temp = root;
-                    root == NULL;
+                    free(temp);
                 }
                 else {
                     *root = *temp;
                     free(temp);
+                    root=NULL;
                 }
             }
             else{
@@ -157,46 +158,43 @@ public:
     }
 };
 
-int main()
-{
+int main() {
     int choice, item;
     avlTree avl;
-    while (1)
-    {
-        cout<<"\n***********************"<<endl;
-        cout<<"AVL Tree Implementation"<<endl;
-        cout<<"\n***********************"<<endl;
-        cout<<"1.Insert Element into the tree"<<endl;
-        cout<<"2.Display Balanced AVL Tree"<<endl;
-        cout<<"3.Delete element from the tree"<<endl;
-        cout<<"4.Exit"<<endl;
-        cout<<"Enter your Choice: ";
-        cin>>choice;
-        switch(choice)
-        {
+    while (1) {
+        cout << "\n***********************" << endl;
+        cout << "AVL Tree Implementation" << endl;
+        cout << "\n***********************" << endl;
+        cout << "1.Insert Element into the tree" << endl;
+        cout << "2.Display Balanced AVL Tree" << endl;
+        cout << "3.Delete element from the tree" << endl;
+        cout << "4.Exit" << endl;
+        cout << "Enter your Choice: ";
+        cin >> choice;
+        switch (choice) {
             case 1:
-                cout<<"Enter value to be inserted: ";
-                cin>>item;
+                cout << "Enter value to be inserted: ";
+                cin >> item;
                 root = avl.insert(root, item);
                 break;
             case 2:
-                if (root == NULL)
-                {
-                    cout<<"Tree is Empty"<<endl;
+                if (root == NULL) {
+                    cout << "Tree is Empty" << endl;
                     continue;
                 }
-                cout<<"Balanced AVL Tree:"<<endl;
+                cout << "Balanced AVL Tree:" << endl;
                 avl.display(root, 1);
                 break;
             case 3:
-                cout<<"Enter value to be deleted: ";
-                cin>>item;
-                root = avl.del(root,item);
+                cout << "Enter value to be deleted: ";
+                cin >> item;
+                root = avl.del(root, item);
                 break;
             case 4:
                 exit(1);
             default:
-                cout<<"Wrong Choice"<<endl;
+                cout << "Wrong Choice" << endl;
         }
     }
     return 0;
+}
