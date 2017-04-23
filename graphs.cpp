@@ -74,16 +74,8 @@ void dijkstra(int graph[V][V], int src)
 }
 int main()
 {
-    //int graph[9][9],i,m,j;
     printf("_______________\n Prim's Algorithm\n_______________\n");
     printf("Shortest spanning Tree:\n");
-    //printf("Enter the distances between each pair of vertices:");
-    /**for(i=0;i<V;i++)
-    {printf("enter values for %d row\n", (i+1));
-        for(j=0;j<V;j++){
-            scanf("%d",graph[i][j]);
-        }
-    }**/
     int graph[V][V] = { { 0, 2, 0, 6, 0 }, { 2, 0, 3, 8, 5 },
                         { 0, 3, 0, 0, 3 }, { 6, 8, 0, 0, 9 }, { 0, 5, 7, 9, 0 }};
     int m;
